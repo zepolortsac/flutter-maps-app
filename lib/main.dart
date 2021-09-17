@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+
+import 'package:mapas_app/interface/screens/access_pgs_screen.dart';
+import 'package:mapas_app/interface/screens/loading_screen.dart';
+import 'package:mapas_app/interface/screens/map_screen.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Material App',
+      home: LoadingScreen(),
+      routes: {
+        'map': (_) => MapScreen(),
+        'loading': (_) => LoadingScreen(),
+        'acess_gps': (_) => AccessGpsScreen(),
+      },
+    );
+  }
+}
