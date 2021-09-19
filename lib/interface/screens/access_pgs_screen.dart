@@ -9,6 +9,7 @@ class AccessGpsScreen extends StatefulWidget {
 
 class _AccessGpsScreenState extends State<AccessGpsScreen>
     with WidgetsBindingObserver {
+  bool popup = false;
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
@@ -24,8 +25,7 @@ class _AccessGpsScreenState extends State<AccessGpsScreen>
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    print('==========> $state');
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed && !popup) {
       if (await Geolocator.isLocationServiceEnabled()) {
         Navigator.pushReplacementNamed(context, 'loading');
       }
@@ -53,9 +53,10 @@ class _AccessGpsScreenState extends State<AccessGpsScreen>
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
+                popup = true;
                 final status = await Permission.location.request();
                 this.accessGPS(status);
-                print(status);
+                popup = false;
               },
             ),
           ],
@@ -64,11 +65,10 @@ class _AccessGpsScreenState extends State<AccessGpsScreen>
     );
   }
 
-  void accessGPS(PermissionStatus status) {
-    print(status);
+  Future accessGPS(PermissionStatus status) async {
     switch (status) {
       case PermissionStatus.granted:
-        Navigator.pushReplacementNamed(context, 'map');
+        await Navigator.pushReplacementNamed(context, 'loading');
         break;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:

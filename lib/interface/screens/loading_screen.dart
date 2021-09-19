@@ -28,7 +28,6 @@ class _LoadingScreenState extends State<LoadingScreen>
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    print('==========> $state');
     if (state == AppLifecycleState.resumed) {
       if (await Geolocator.isLocationServiceEnabled()) {
         Navigator.pushReplacement(
