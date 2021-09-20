@@ -39,7 +39,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget createMap(MyLocationState state) {
-    final mapBloc = BlocProvider.of<MapBloc>(context);
     if (!state.existeUbicacion) {
       return Center(
         child: Column(
@@ -57,18 +56,25 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
     } else {
-      final initialCamaraPosition = new CameraPosition(
+      final mapBloc = BlocProvider.of<MapBloc>(context);
+      final newPos = new LatLng(
+        state.ubicacion!.latitude,
+        state.ubicacion!.longitude,
+      );
+      mapBloc.add(OnPositionUpdate(newPos));
+      final initialCameraPosition = new CameraPosition(
         target: LatLng(state.ubicacion!.latitude, state.ubicacion!.longitude),
         zoom: 14.0,
       );
       return GoogleMap(
-        initialCameraPosition: initialCamaraPosition,
+        initialCameraPosition: initialCameraPosition,
         mapType: MapType.terrain,
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         trafficEnabled: true,
         onMapCreated: mapBloc.initMap,
+        // polylines: ,
       );
     }
   }

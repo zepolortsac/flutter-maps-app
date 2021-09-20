@@ -4,3 +4,9 @@ part of 'map_bloc.dart';
 abstract class MapEvent {}
 
 class OnRadyMap extends MapEvent {}
+
+class OnPositionUpdate extends MapEvent {
+  final LatLng position;
+
+  OnPositionUpdate(this.position);
+}

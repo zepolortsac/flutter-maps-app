@@ -12,7 +12,14 @@ part 'map_state.dart';
 class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(MapState());
 
+  //controlador del mapa
   late GoogleMapController _mapController;
+
+  //Polylines
+  Polyline _myRoute = new Polyline(
+    polylineId: PolylineId('my_Route'),
+    width: 4,
+  );
 
   void initMap(GoogleMapController controller) {
     if (!state.readyMap) {
@@ -32,6 +39,15 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Stream<MapState> mapEventToState(MapEvent event) async* {
     if (event is OnRadyMap) {
       yield state.copyWith(readyMap: true);
+    } else if (event is OnPositionUpdate) {
+      List<LatLng> points = [...this._myRoute.points, event.position];
+      this._myRoute = this._myRoute.copyWith(pointsParam: points);
+
+      //the polylines
+      final currentPolylines = state.polylines;
+      currentPolylines['myRoute'] = this._myRoute;
+
+      yield state.copyWith(polylines: currentPolylines);
     }
   }
 }
