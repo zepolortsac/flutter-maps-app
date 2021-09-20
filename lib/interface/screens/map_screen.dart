@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mapas_app/bloc/map/map_bloc.dart';
 import 'package:mapas_app/bloc/my_location/my_location_bloc.dart';
+import 'package:mapas_app/interface/widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -27,10 +29,17 @@ class _MapScreenState extends State<MapScreen> {
       body: BlocBuilder<MyLocationBloc, MyLocationState>(
         builder: (_, state) => createMap(state),
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BtnLocation(),
+        ],
+      ),
     );
   }
 
   Widget createMap(MyLocationState state) {
+    final mapBloc = BlocProvider.of<MapBloc>(context);
     if (!state.existeUbicacion) {
       return Center(
         child: Column(
@@ -49,15 +58,17 @@ class _MapScreenState extends State<MapScreen> {
       );
     } else {
       final initialCamaraPosition = new CameraPosition(
-          target: LatLng(state.ubicacion!.latitude, state.ubicacion!.longitude),
-          zoom: 14.0);
+        target: LatLng(state.ubicacion!.latitude, state.ubicacion!.longitude),
+        zoom: 14.0,
+      );
       return GoogleMap(
         initialCameraPosition: initialCamaraPosition,
         mapType: MapType.terrain,
         myLocationEnabled: true,
-        myLocationButtonEnabled: true,
+        myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         trafficEnabled: true,
+        onMapCreated: mapBloc.initMap,
       );
     }
   }

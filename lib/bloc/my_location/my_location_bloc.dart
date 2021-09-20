@@ -32,11 +32,7 @@ class MyLocationBloc extends Bloc<MyLocationEvent, MyLocationState> {
   }
 
   @override
-  Stream<MyLocationState> mapEventToState(
-    MyLocationEvent event,
-  ) async* {
-    // TODO: implement mapEventToState
-
+  Stream<MyLocationState> mapEventToState(MyLocationEvent event) async* {
     if (event is OnLocationChanged) {
       print(event);
       yield state.copyWith(
