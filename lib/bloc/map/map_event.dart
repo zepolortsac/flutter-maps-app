@@ -5,6 +5,10 @@ abstract class MapEvent {}
 
 class OnRadyMap extends MapEvent {}
 
+class OnHideRoute extends MapEvent {}
+
+class OnFollowLocation extends MapEvent {}
+
 class OnPositionUpdate extends MapEvent {
   final LatLng position;
 

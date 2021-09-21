@@ -33,6 +33,8 @@ class _MapScreenState extends State<MapScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           BtnLocation(),
+          BtnMyRoute(),
+          BtnFollorLocation(),
         ],
       ),
     );
@@ -64,7 +66,7 @@ class _MapScreenState extends State<MapScreen> {
       mapBloc.add(OnPositionUpdate(newPos));
       final initialCameraPosition = new CameraPosition(
         target: LatLng(state.ubicacion!.latitude, state.ubicacion!.longitude),
-        zoom: 14.0,
+        zoom: 14,
       );
       return GoogleMap(
         initialCameraPosition: initialCameraPosition,
@@ -73,8 +75,9 @@ class _MapScreenState extends State<MapScreen> {
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         trafficEnabled: true,
+        tiltGesturesEnabled: true,
         onMapCreated: mapBloc.initMap,
-        // polylines: ,
+        polylines: mapBloc.state.polylines.values.toSet(),
       );
     }
   }

@@ -5,3 +5,5 @@ import 'package:mapas_app/bloc/map/map_bloc.dart';
 import 'package:mapas_app/bloc/my_location/my_location_bloc.dart';
 
 part 'btn_location.dart';
+part 'btn_my_route.dart';
+part 'btn_follow_location.dart';
