@@ -9,6 +9,12 @@ class OnHideRoute extends MapEvent {}
 
 class OnFollowLocation extends MapEvent {}
 
+class OnMapMoved extends MapEvent {
+  final LatLng centerMap;
+
+  OnMapMoved(this.centerMap);
+}
+
 class OnPositionUpdate extends MapEvent {
   final LatLng position;
 

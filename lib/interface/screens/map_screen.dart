@@ -76,6 +76,12 @@ class _MapScreenState extends State<MapScreen> {
         zoomControlsEnabled: false,
         trafficEnabled: true,
         tiltGesturesEnabled: true,
+        onCameraMove: (camearaPosition) {
+          mapBloc.add(OnMapMoved(camearaPosition.target));
+        },
+        onCameraIdle: () {
+          print('idel');
+        },
         onMapCreated: mapBloc.initMap,
         polylines: mapBloc.state.polylines.values.toSet(),
       );
