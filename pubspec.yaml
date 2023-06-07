@@ -31,7 +31,7 @@ dependencies:
 
   #The following adds all the dependecies necesary to handle GoogleMaps Flutter,
   #Geolocation, Permission Handler, flutter_Bloc and more.
-  dio: ^4.0.0
+  dio: ~>5.0.0
   animate_do: ^2.0.0
   geolocator: ^7.6.1
   flutter_bloc: ^7.2.0
